@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.+'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+application {
+    mainClass = 'acme.EchoHandler'
+}
+
+dependencies {
+    implementation 'org.apache.httpcomponents.core5:httpcore5:5.2.+'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.+'
+}
