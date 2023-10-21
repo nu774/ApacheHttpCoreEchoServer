@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
-public class WorkerPoolExecutor extends VirtualThreadExecutorWrapper {
+class WorkerPoolExecutor extends VirtualThreadExecutorWrapper {
     private final Map<Worker, Boolean> workerSet = new ConcurrentHashMap<>();
 
     public WorkerPoolExecutor(
@@ -45,11 +45,13 @@ public class WorkerPoolExecutor extends VirtualThreadExecutorWrapper {
             final BlockingQueue<Runnable> workQueue,
             final ThreadFactory threadFactory) {
     }
+    @Override
     protected void beforeExecute(final Thread t, final Runnable r) {
         if (r instanceof Worker) {
             this.workerSet.put((Worker) r, Boolean.TRUE);
         }
     }
+    @Override
     protected void afterExecute(final Runnable r, final Throwable t) {
         if (r instanceof Worker) {
             this.workerSet.remove(r);
