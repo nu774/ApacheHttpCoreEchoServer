@@ -106,7 +106,7 @@ public class HttpServer implements ModalCloseable {
                 CharCodingConfig.DEFAULT);
         this.sslSetupHandler = sslSetupHandler;
         this.exceptionListener = exceptionListener != null ? exceptionListener : ExceptionListener.NO_OP;
-        this.listenerExecutorService = Executors.newVirtualThreadPerTaskExecutor();
+        this.listenerExecutorService = new VirtualThreadExecutorWrapper();
         this.workerThreads = new ThreadGroup("HTTP-workers");
         this.workerExecutorService = new WorkerPoolExecutor(
                 0, Integer.MAX_VALUE, 1L, TimeUnit.SECONDS,
